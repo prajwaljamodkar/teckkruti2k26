@@ -3,10 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <h1>hello world</h1>
+    <title>TechKruti – Hire a Worker</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
+
+<!-- ===== APP SHELL ===== -->
+<div id="app">
+
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+        <div class="topbar__logo">
+            <span class="logo-icon">🔧</span>
+            <span class="logo-text">TechKruti</span>
+        </div>
+        <button class="topbar__btn" id="btnPostJob" aria-label="Post a job">+ Post Job</button>
+    </header>
+
+    <!-- Search & Filter -->
+    <section class="search-bar">
+        <div class="search-bar__input-wrap">
+            <span class="search-bar__icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search workers by skill…" aria-label="Search workers" autocomplete="off">
+        </div>
+    </section>
+
+    <!-- Category Chips -->
+    <div class="category-chips" id="categoryChips" role="list" aria-label="Filter by category">
+        <button class="chip chip--active" data-cat="all" role="listitem">All</button>
+        <button class="chip" data-cat="Plumber" role="listitem">🪠 Plumber</button>
+        <button class="chip" data-cat="Electrician" role="listitem">⚡ Electrician</button>
+        <button class="chip" data-cat="Carpenter" role="listitem">🪚 Carpenter</button>
+        <button class="chip" data-cat="Painter" role="listitem">🎨 Painter</button>
+        <button class="chip" data-cat="Cleaner" role="listitem">🧹 Cleaner</button>
+        <button class="chip" data-cat="Mechanic" role="listitem">🔩 Mechanic</button>
+    </div>
+
+    <!-- Workers List -->
+    <main class="workers-grid" id="workersGrid" aria-live="polite">
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p>Loading workers…</p>
+        </div>
+    </main>
+
+    <!-- ===== HIRE MODAL ===== -->
+    <div class="modal-overlay" id="hireModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal">
+            <button class="modal__close" id="closeHireModal" aria-label="Close">✕</button>
+            <h2 class="modal__title" id="modalTitle">Hire Worker</h2>
+
+            <div class="modal__worker-info" id="modalWorkerInfo"></div>
+
+            <form id="hireForm" novalidate>
+                <div class="form-group">
+                    <label for="clientName">Your Name <span class="req">*</span></label>
+                    <input type="text" id="clientName" name="clientName" placeholder="Enter your name" required maxlength="100">
+                    <span class="err" id="errClientName"></span>
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">Phone Number <span class="req">*</span></label>
+                    <input type="tel" id="clientPhone" name="clientPhone" placeholder="+91 00000 00000" required pattern="[+0-9\s\-]{7,15}">
+                    <span class="err" id="errClientPhone"></span>
+                </div>
+                <div class="form-group">
+                    <label for="jobDescription">Job Description <span class="req">*</span></label>
+                    <textarea id="jobDescription" name="jobDescription" rows="3" placeholder="Describe the work needed…" required maxlength="500"></textarea>
+                    <span class="err" id="errJobDescription"></span>
+                </div>
+                <div class="form-group">
+                    <label for="scheduledDate">Preferred Date <span class="req">*</span></label>
+                    <input type="date" id="scheduledDate" name="scheduledDate" required>
+                    <span class="err" id="errScheduledDate"></span>
+                </div>
+                <button type="submit" class="btn-primary btn--full" id="submitHire">Confirm Hire</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== POST JOB MODAL ===== -->
+    <div class="modal-overlay" id="postJobModal" role="dialog" aria-modal="true" aria-labelledby="postJobTitle" hidden>
+        <div class="modal">
+            <button class="modal__close" id="closePostJobModal" aria-label="Close">✕</button>
+            <h2 class="modal__title" id="postJobTitle">Post a New Job</h2>
+
+            <form id="postJobForm" novalidate>
+                <div class="form-group">
+                    <label for="pjCategory">Category <span class="req">*</span></label>
+                    <select id="pjCategory" name="category" required>
+                        <option value="">Select category…</option>
+                        <option>Plumber</option>
+                        <option>Electrician</option>
+                        <option>Carpenter</option>
+                        <option>Painter</option>
+                        <option>Cleaner</option>
+                        <option>Mechanic</option>
+                        <option>Other</option>
+                    </select>
+                    <span class="err" id="errPjCategory"></span>
+                </div>
+                <div class="form-group">
+                    <label for="pjDescription">Job Description <span class="req">*</span></label>
+                    <textarea id="pjDescription" name="description" rows="3" placeholder="Describe the work…" required maxlength="500"></textarea>
+                    <span class="err" id="errPjDescription"></span>
+                </div>
+                <div class="form-group">
+                    <label for="pjBudget">Budget (₹)</label>
+                    <input type="number" id="pjBudget" name="budget" placeholder="e.g. 500" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="pjDate">Date Needed <span class="req">*</span></label>
+                    <input type="date" id="pjDate" name="dateNeeded" required>
+                    <span class="err" id="errPjDate"></span>
+                </div>
+                <button type="submit" class="btn-primary btn--full">Post Job</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== SUCCESS TOAST ===== -->
+    <div class="toast" id="toast" role="alert" aria-live="assertive" hidden></div>
+
+</div><!-- /#app -->
+
+<script src="js/app.js"></script>
 </body>
 </html>

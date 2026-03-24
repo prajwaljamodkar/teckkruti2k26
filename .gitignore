@@ -1,0 +1,11 @@
+# Java build output
+backend/target/
+
+# IDE files
+*.iml
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
